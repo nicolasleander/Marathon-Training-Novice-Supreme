@@ -55,11 +55,11 @@ ics_content << "PRODID:-//hacksw/handcal//NONSGML v1.0//EN"
 training_schedule.each_with_index do |week, week_index|
   week.each_with_index do |activity, day_index|
     next if activity == "Rest"
-    
+
     event_date = start_date + (week_index * 7) + day_index
     event_start = event_date.strftime("%Y%m%d") + "T090000"  # 9:00 AM start time
     event_end = (event_date + (event_duration / 24.0)).strftime("%Y%m%d") + "T" + (9 + event_duration).to_i.to_s.rjust(2, '0') + "0000"
-    
+
     # Improved event naming
     event_name = case activity
     when /km run/
@@ -73,9 +73,9 @@ training_schedule.each_with_index do |week, week_index|
     else
       activity
     end
-    
+
     event_name = "Week #{week_index + 1} - #{event_name}"
-    
+
     ics_content << "BEGIN:VEVENT"
     ics_content << "UID:#{SecureRandom.uuid}"
     ics_content << "DTSTAMP:#{Time.now.strftime("%Y%m%dT%H%M%SZ")}"
